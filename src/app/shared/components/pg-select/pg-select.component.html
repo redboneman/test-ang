@@ -1,0 +1,30 @@
+<!--<mat-form-field appearance="standard">-->
+<!--    <mat-label>-->
+<!--        Test select-->
+<!--    </mat-label>-->
+<!--    <mat-select [ngModel]="value" (ngModelChange)="value = $event; valueChange.emit($event)" [multiple]="multiple">-->
+<!--        <input type="text" [(ngModel)]="search" placeholder="Search...">-->
+
+<!--        <mat-select-trigger>{{getSelectedValueLabels()}}</mat-select-trigger>-->
+<!--        <mat-option *ngFor="let item of value" [value]="getValueByPath(item)">-->
+<!--            {{getTitleByPath(item)}}-->
+<!--        </mat-option>-->
+<!--        <hr>-->
+<!--        <mat-option *ngFor="let item of data | search:search:1" [value]="getValueByPath(item)">-->
+<!--            {{getTitleByPath(item)}}-->
+<!--        </mat-option>-->
+<!--    </mat-select>-->
+<!--</mat-form-field>-->
+
+<mat-form-field appearance="standard">
+    <mat-label>Test select</mat-label>
+    <input type="text" [formControl]="search" matInput [matAutocomplete]="auto">
+
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="selectOption($event)">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="getValueByPath(option)">
+            {{getTitleByPath(option)}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+
+<p>value: {{value | json}}</p>

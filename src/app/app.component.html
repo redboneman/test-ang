@@ -1,0 +1,20 @@
+<pg-select
+    [data]="array"
+    valuePath="key"
+    titlePath="value"
+    [(value)]="first"
+></pg-select>
+
+<pg-select
+    [data]="array"
+    titlePath="value"
+    [(value)]="second"
+></pg-select>
+
+<pg-select
+    [data]="arrayRaw"
+    [(value)]="third"
+    [multiple]="true"
+></pg-select>
+
+<button (click)="logValues()">Log values</button>
