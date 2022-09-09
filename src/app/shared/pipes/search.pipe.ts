@@ -7,7 +7,7 @@ export class SearchPipe implements PipeTransform {
 
     transform(value: any[], search: string, limit: number = 20): any {
         if (value && value.length) {
-            return value.filter(entry => JSON.stringify(entry).includes(search)).slice(0, limit)
+            return value.filter(entry => JSON.stringify(entry).toLocaleLowerCase().includes(search.toLocaleLowerCase())).slice(0, limit)
         }
     }
 

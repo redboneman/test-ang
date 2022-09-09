@@ -12,6 +12,7 @@ import {SearchPipe} from './shared/pipes/search.pipe';
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         MatInputModule,
         MatMenuModule,
         MatAutocompleteModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatIconModule
     ],
     providers: [],
     bootstrap: [AppComponent]

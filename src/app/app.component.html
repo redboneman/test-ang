@@ -1,20 +1,24 @@
 <pg-select
     [data]="array"
-    valuePath="key"
-    titlePath="value"
-    [(value)]="first"
+    valuePath="code"
+    titlePath="name"
+    [formControl]="first"
+    [rawTitle]="true"
+    appearance="outline"
 ></pg-select>
+<!--Form control value: {{first.value | json}}<br>-->
 
-<pg-select
+<!--<pg-select
     [data]="array"
-    titlePath="value"
-    [(value)]="second"
+    titlePath="name"
+    [formControl]="second"
 ></pg-select>
+Form control value: {{second.value | json}}<br>
 
 <pg-select
     [data]="arrayRaw"
-    [(value)]="third"
-    [multiple]="true"
+    [formControl]="third"
 ></pg-select>
+Form control value: {{third.value | json}}<br>
 
-<button (click)="logValues()">Log values</button>
+<button (click)="logValues()">Log values</button>-->

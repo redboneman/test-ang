@@ -1,4 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {countries} from './shared/placeholders/countries';
 
 @Component({
     selector: 'app-root',
@@ -9,19 +11,13 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 export class AppComponent implements OnInit {
     title = 'test-ang';
 
-    array = [
-        {key: 1, value: 'Ukraine'},
-        {key: 2, value: 'USA'},
-        {key: 3, value: 'Portugal'},
-        {key: 4, value: 'Canada'},
-        {key: 5, value: 'United Kingdom'},
-    ]
+    array = countries;
 
     arrayRaw = ['Ukraine', 'USA', 'Portugal', 'Canada', 'United Kingdom'];
 
-    first: any = 1;
-    second: any;
-    third: any = ['USA'];
+    first: any = new FormControl('UA');
+    second: any = new FormControl({name: 'Canada', code: 'CA'});
+    third: any = new FormControl(['USA']);
 
     ngOnInit() {
     }
