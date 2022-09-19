@@ -1,23 +1,5 @@
-<!--<mat-form-field appearance="standard">-->
-<!--    <mat-label>-->
-<!--        Test select-->
-<!--    </mat-label>-->
-<!--    <mat-select [ngModel]="value" (ngModelChange)="value = $event; valueChange.emit($event)" [multiple]="multiple">-->
-<!--        <input type="text" [(ngModel)]="search" placeholders="Search...">-->
-
-<!--        <mat-select-trigger>{{getSelectedValueLabels()}}</mat-select-trigger>-->
-<!--        <mat-option *ngFor="let item of value" [value]="getValueByPath(item)">-->
-<!--            {{getTitleByPath(item)}}-->
-<!--        </mat-option>-->
-<!--        <hr>-->
-<!--        <mat-option *ngFor="let item of data | search:search:1" [value]="getValueByPath(item)">-->
-<!--            {{getTitleByPath(item)}}-->
-<!--        </mat-option>-->
-<!--    </mat-select>-->
-<!--</mat-form-field>-->
-
 <mat-form-field [appearance]="appearance" style="width: 100%;">
-    <mat-label>Test select</mat-label>
+    <mat-label>{{label}}</mat-label>
     <input type="text" [formControl]="search" matInput [matAutocomplete]="auto" (focusin)="focusIn($event)" (focusout)="focusOut($event)">
     <mat-icon class="clear-ico" (click)="clearClick($event)" matSuffix>clear</mat-icon>
 

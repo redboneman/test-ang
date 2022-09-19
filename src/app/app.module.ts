@@ -13,11 +13,15 @@ import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatIconModule} from '@angular/material/icon';
+import {PgMultiSelectComponent} from './shared/components/pg-multi-select/pg-multi-select.component';
+import {MatChipsModule} from '@angular/material/chips';
+import {FrontRootService} from '@btcasino/front-root';
 
 @NgModule({
     declarations: [
         AppComponent,
         PgSelectComponent,
+        PgMultiSelectComponent,
         SearchPipe
     ],
     imports: [
@@ -31,9 +35,9 @@ import {MatIconModule} from '@angular/material/icon';
         MatMenuModule,
         MatAutocompleteModule,
         ReactiveFormsModule,
-        MatIconModule
+        MatIconModule,
+        MatChipsModule
     ],
-    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {

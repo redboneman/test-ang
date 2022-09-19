@@ -5,20 +5,15 @@
     [formControl]="first"
     [rawTitle]="true"
     appearance="outline"
+    label="Single select"
 ></pg-select>
-<!--Form control value: {{first.value | json}}<br>-->
 
-<!--<pg-select
+<pg-multi-select
     [data]="array"
+    valuePath="code"
     titlePath="name"
-    [formControl]="second"
-></pg-select>
-Form control value: {{second.value | json}}<br>
-
-<pg-select
-    [data]="arrayRaw"
     [formControl]="third"
-></pg-select>
-Form control value: {{third.value | json}}<br>
-
-<button (click)="logValues()">Log values</button>-->
+    [rawTitle]="true"
+    appearance="fill"
+    label="Single select"
+></pg-multi-select>

@@ -1,0 +1,30 @@
+<mat-form-field [appearance]="appearance" style="width: 100%;" (click)="searchInput.focus()">
+    <mat-label>{{label}}</mat-label>
+    <mat-chip-list #chipList>
+        <mat-chip
+            *ngFor="let item of value; index as i"
+            (removed)="remove(i)"
+        >
+            {{getTitleByPathFromList(item)}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+    </mat-chip-list>
+    <input
+        placeholder="New item..."
+        #searchInput
+        [formControl]="search"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        style="width: 100%;margin: 8px 0;"
+    >
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectOption($event)">
+        <mat-option *ngFor="let option of data | search:search.value:20" [value]="getValueByPath(option)">
+            <span class="raw-title" *ngIf="rawTitle">
+                ({{getValueByPath(option)}})
+            </span>
+            {{getTitleByPath(option)}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+
+<p>value: {{value | json}}</p>

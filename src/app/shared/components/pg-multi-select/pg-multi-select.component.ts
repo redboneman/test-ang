@@ -2,24 +2,29 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    ElementRef,
     EventEmitter,
     Input,
     OnInit,
     Optional,
     Output,
-    Self
+    Self,
+    ViewChild
 } from '@angular/core';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {ControlValueAccessor, FormControl, NgControl} from '@angular/forms';
 import {MatFormFieldAppearance} from '@angular/material/form-field';
 
 @Component({
-    selector: 'pg-select',
-    templateUrl: './pg-select.component.html',
-    styleUrls: ['./pg-select.component.css'],
+    selector: 'pg-multi-select',
+    templateUrl: './pg-multi-select.component.html',
+    styleUrls: ['./pg-multi-select.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PgSelectComponent implements OnInit, ControlValueAccessor {
+export class PgMultiSelectComponent implements OnInit, ControlValueAccessor {
+
+    @ViewChild('searchInput')
+    searchInput: ElementRef<HTMLInputElement>;
 
     @Input()
     data: any[] = [];
@@ -41,7 +46,6 @@ export class PgSelectComponent implements OnInit, ControlValueAccessor {
     valueChange: EventEmitter<any> = new EventEmitter<any>();
 
     search = new FormControl('');
-    displayedValue = '';
 
     public onChangeFn = (_: any) => {};
     public onTouchedFn = () => {};
@@ -56,59 +60,28 @@ export class PgSelectComponent implements OnInit, ControlValueAccessor {
     }
 
     ngOnInit(): void {
-        const findValue = this.data.find((entry: any) => {
+    }
+
+    findValueInList(item: any) {
+        return this.data.find((entry: any) => {
             if (this.valuePath) {
-                return entry[this.valuePath] === this.value;
+                return entry[this.valuePath] === item;
             } else {
-                return JSON.stringify(entry) === JSON.stringify(this.value);
+                return JSON.stringify(entry) === JSON.stringify(item);
             }
-        })
-        if (findValue) {
-            if (this.titlePath) {
-                this.displayedValue = findValue[this.titlePath];
-            } else {
-                this.displayedValue = findValue;
-            }
-            this.search.setValue(this.displayedValue);
-        }
+        });
     }
 
-    clearClick(event: MouseEvent) {
-        event.stopPropagation();
-        this.displayedValue = '';
-        this.search.setValue('');
-        this.changes.detectChanges();
-        this.value = null;
-        this.valueChange.emit(null);
-        this.onChangeFn(this.value);
-    }
-
-    focusIn(event: FocusEvent) {
-        if ((event.relatedTarget as HTMLElement)?.nodeName === 'MAT-OPTION') {
-            (event.target as HTMLInputElement).blur()
-            return;
-        }
-        this.search.setValue('');
-    }
-
-    focusOut(event: FocusEvent) {
-        if ((event.relatedTarget as HTMLElement)?.nodeName === 'MAT-OPTION') return;
-        this.search.setValue(this.displayedValue);
-    }
-
-    searchChanged(value: any) {
-        if (value && typeof value === 'string') {
-            return this.data.filter((entry: any) => JSON.stringify(entry).toLowerCase().includes(value.toLocaleLowerCase()));
-        }
-        return this.data;
+    remove(index: number) {
+        this.value.splice(index, 1);
     }
 
     selectOption(event: MatAutocompleteSelectedEvent) {
-        this.displayedValue = event.option.viewValue;
         this.search.setValue('');
-        if (this.value === event.option.value) return;
-        this.value = event.option.value;
-        this.valueChange.emit(event.option.value);
+        this.searchInput.nativeElement.value = '';
+        if (this.value.includes(event.option.value)) return;
+        this.value.push(event.option.value);
+        this.valueChange.emit(this.value);
         this.onChangeFn(this.value);
         console.log(event);
     }
@@ -129,6 +102,19 @@ export class PgSelectComponent implements OnInit, ControlValueAccessor {
         let result: any;
         try {
             result = item[this.titlePath];
+        } catch (e) {
+            console.error('INVALID TITLE PATH!', item);
+        }
+        return result || item;
+    }
+
+    getTitleByPathFromList(item: any) {
+        if (!this.titlePath) return item;
+        const findValue = this.findValueInList(item);
+        if (!findValue) return item;
+        let result: any;
+        try {
+            result = findValue[this.titlePath];
         } catch (e) {
             console.error('INVALID TITLE PATH!', item);
         }
